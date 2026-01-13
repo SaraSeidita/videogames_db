@@ -9,7 +9,7 @@ Le tecnologie che utilizzerò per il progetto:
 - Angular 21 (gestione frontend)
 - CSS Tailwind (stile CSS)
 
-## 🗄️ Struttura Database
+# Struttura Database
 Il progetto utilizza SQL Server con le seguenti tabelle principali:
 
 - **Videogiochi**: ID, Titolo, Genere, AnnoUscita, AnnoGiocata, Trama, Recensione, ImmagineUrl, Nascosto (Soft Delete).
