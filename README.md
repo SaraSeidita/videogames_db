@@ -9,6 +9,10 @@ Le tecnologie che utilizzerò per il progetto:
 - Angular 21 (gestione frontend)
 - CSS Tailwind (stile CSS)
 
-# SQL - Database 
-<img width="475" height="321" alt="image" src="https://github.com/user-attachments/assets/c4df6677-05a7-44c5-bd74-80d1dc12c5c7" />
+## 🗄️ Struttura Database
+Il progetto utilizza SQL Server con le seguenti tabelle principali:
 
+- **Videogiochi**: ID, Titolo, Genere, AnnoUscita, AnnoGiocata, Trama, Recensione, ImmagineUrl, Nascosto (Soft Delete).
+- **Auth**: ID, Username, Password (Hashed), ProfilePicUrl.
+
+Le operazioni CRUD sono gestite interamente tramite **Stored Procedure** per massimizzare la sicurezza e le prestazioni.
