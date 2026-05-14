@@ -1,59 +1,53 @@
-# GamesPoponeDemo
+# videogames_db
+Piccolo progetto personale per raccogliere e visualizzare una lista dei videogiochi che ho giocato.
+Pubblicherò i progressi non appena inizierò con il frontend.
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.1.
+# Tecnologie 
+Le tecnologie che utilizzerò per il progetto:
+- SQL Server (database)
+- C# (gestione backend)
+- Angular 21 (gestione frontend)
+- CSS Tailwind (stile CSS)
 
-## Development server
+# Struttura Database
 
-To start a local development server, run:
+## Passo 1 - Database (SQL Server)
 
-```bash
-ng serve
-```
+Ho usato SQL Server (SQL Server Management Studio) per la gestione del database.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- ho usato l’autenticazione windows per facilitare la connessione al database  
+- nome database: GamesPopone
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+# Tabelle
 
-```bash
-ng generate component component-name
-```
+## Tabella ‘Videogiochi’
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Un’unica tabella per i record dei videogiochi che voglio mostrare: hanno il loro ID (primary key), titolo, genere del videogioco, anno in cui è uscito, anno in cui l’ho giocato (può essere null, se non ricordo quando), trama in breve, recensione/commento, quando ho inserito il record, il path dell’immagine per la copertina, “nascosto” per quando non voglio mostrare un record (lo nascondo, invece di cancellarlo)
 
-```bash
-ng generate --help
-```
+## Tabella ‘Auth’
 
-## Building
+Semplice tabella di autenticazione / utente. Questo per implementazione futura: voglio essere l’unica a inserire / modificare / cancellare i record. Ma vorrei poter mostrare la lista dei videogiochi.  
+Ha semplicemente ID (Primary key), username, password (criptata), path della foto profilo.
 
-To build the project run:
+## Stored Procedure
 
-```bash
-ng build
-```
+Per gestire i dati non scrivo le query nel codice del sito, ma uso le Stored Procedure. Sono dei "comandi pronti" salvati direttamente nel database. Il backend è più leggero perché delega il lavoro sporco al database.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### Videogioco Singolo
 
-## Running unit tests
+SP che, dato un ID, mostra un singolo record della tabella videogiochi.
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+### Videogioco Lista
 
-```bash
-ng test
-```
+SP che mostra una lista di record, ossia la lista dei videogiochi. Non mostra tutti gli attributi, ma solo “un’anteprima”.  
+La SP è implementata in modo da poter essere utilizzata anche per la ricerca, dato il titolo, per filtrare la lista.
 
-## Running end-to-end tests
+### Videogioco Crea/Modifica
 
-For end-to-end (e2e) testing, run:
+Ho fatto un’unica SP per la creazione o modifica di un record della tabella Videogiochi.
 
-```bash
-ng e2e
-```
+### Videogioco cancella
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+La SP per la cancellazione non cancella direttamente il record della tabella Videogiochi. Semplicemente, “nasconde” il record. Così è facile ripristinare il record in un secondo momento.
