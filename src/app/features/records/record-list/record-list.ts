@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { VideogiochiStore } from '../store/videogioco.store';
 
 @Component({
   selector: 'app-record-list',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './record-list.css',
 })
 export class RecordList {
-
+  readonly store = inject(VideogiochiStore);
 }

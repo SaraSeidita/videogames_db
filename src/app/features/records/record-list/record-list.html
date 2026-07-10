@@ -1,1 +1,34 @@
-<p>qua ci sarà la lista dei videogiochi (card) </p>
+<div class="container">
+      <h2>🎮 Il mio Catalogo Videogiochi</h2>
+
+      @if (store.loading()) {
+        <div class="loader">Caricamento in corso...</div>
+      }
+
+      @if (store.error()) {
+        <div class="error-banner">Si è verificato un errore: {{ store.error() }}</div>
+      }
+
+      <div class="grid">
+        @for (gioco of store.lista(); track gioco.id) {
+          <div class="card">
+            <div class="card-image">
+              <img [src]="gioco.immagineUrl || 'assets/images/img/default.jpg'" [alt]="gioco.titolo">
+            </div>
+            <div class="card-content">
+              <h3>{{ gioco.titolo }}</h3>
+              <span class="badge">{{ gioco.genere }}</span>
+              <p class="trama">{{ gioco.trama || 'Nessuna trama disponibile.' }}</p>
+              <div class="card-footer">
+                <span>Uscita: <strong>{{ gioco.annoUscita }}</strong></span>
+                <span>Giocato: <strong>{{ gioco.annoGiocata }}</strong></span>
+              </div>
+            </div>
+          </div>
+        } @empty {
+          @if (!store.loading()) {
+            <p>Nessun videogioco presente in lista.</p>
+          }
+        }
+      </div>
+    </div>
