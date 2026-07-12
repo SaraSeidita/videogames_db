@@ -3,39 +3,17 @@ import { signalStore, withState, withMethods, withHooks, patchState } from '@ngr
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { VideogiocoListModel } from '../../../shared/models/record';
+import { VideogiochiInitialState } from './videogioco.slice';
 
 // modello per la lista dei videogiochi
 
-export interface VideogiocoListModel {
-  // Modello per la lista dei videogiochi recuperato dal backend
-  id: number;
-  titolo: string;
-  genere: string;
-  annoUscita: number;
-  annoGiocata: number;
-  trama: string;
-  immagineUrl: string;
-}
-
-export interface VideogiochiState {
-  // Stato della lista dei videogiochi
-  lista: VideogiocoListModel[]; // Lista dei videogiochi
-  loading: boolean; // Stato di caricamento
-  error: string | null; // Messaggio di errore, se presente
-}
-
-const initialState: VideogiochiState = {
-  // Stato iniziale della lista dei videogiochi
-  lista: [], // Lista vuota all'inizio
-  loading: false, // Non in caricamento all'inizio
-  error: null, // Nessun errore all'inizio
-};
 
 // Creazione del Signal Store per la gestione dello stato della lista dei videogiochi
 
 export const VideogiochiStore = signalStore(
   { providedIn: 'root' }, // Il Signal Store è fornito a livello di root, quindi disponibile in tutta l'applicazione
-  withState(initialState), // Stato iniziale del Signal Store
+  withState(VideogiochiInitialState), // Stato iniziale del Signal Store
   withMethods((store, http = inject(HttpClient)) => ({
     async caricaVideogiochi() {
       patchState(store, { loading: true, error: null });
