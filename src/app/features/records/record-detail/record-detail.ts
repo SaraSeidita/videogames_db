@@ -1,11 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
+import { VideogiochiStore } from '../store/videogioco.store';
+import { Location } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-record-detail',
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './record-detail.html',
   styleUrl: './record-detail.css',
 })
 export class RecordDetail {
+
+  readonly store = inject(VideogiochiStore);
+  private readonly location = inject(Location);
+
+  // Angular 21 intercetta automaticamente il parametro :id dall'URL 
+  // se nel config del router è attivo "withComponentInputBinding()"
+  id = input.required<number>(); 
+
+  ngOnInit(): void {
+    // Al caricamento del componente, ordiniamo allo store di caricare il singolo record usando l'id dell'URL
+    this.store.caricaDettaglioVideogioco(this.id());
+  }
+
+  goBack(): void {
+    this.location.back(); // Torna indietro alla lista mantenendo lo stato precedente
+  }
 
 }

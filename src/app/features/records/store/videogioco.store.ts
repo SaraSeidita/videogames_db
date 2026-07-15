@@ -3,27 +3,19 @@ import { signalStore, withState, withMethods, withHooks, patchState } from '@ngr
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { VideogiocoListModel } from '../../../shared/models/record';
+import { VideogiocoDetailModel, VideogiocoListModel } from '../../../shared/models/record';
 import { VideogiochiInitialState } from './videogioco.slice';
-
-// modello per la lista dei videogiochi
-
-
-// Creazione del Signal Store per la gestione dello stato della lista dei videogiochi
+import { VideogiocoService } from '../../../shared/services/app.services';
 
 export const VideogiochiStore = signalStore(
-  { providedIn: 'root' }, // Il Signal Store è fornito a livello di root, quindi disponibile in tutta l'applicazione
-  withState(VideogiochiInitialState), // Stato iniziale del Signal Store
-  withMethods((store, http = inject(HttpClient)) => ({
+  { providedIn: 'root' },
+  withState(VideogiochiInitialState), // Ora contiene anche "detail" inizializzato a null
+  withMethods((store, videogiocoService = inject(VideogiocoService)) => ({
+    
     async caricaVideogiochi() {
       patchState(store, { loading: true, error: null });
       try {
-        // Chiamata al tuo controller .NET (aggiorna l'URL con il tuo)
-        const response = await firstValueFrom(
-          http.get<{ success: boolean; data: VideogiocoListModel[] }>(
-            `${environment.API_BASE_URL}/Videogioco/ListaVideogiochi`,
-          ),
-        );
+        const response = await firstValueFrom(videogiocoService.getLista());
 
         if (response.success) {
           patchState(store, { lista: response.data, loading: false });
@@ -34,10 +26,28 @@ export const VideogiochiStore = signalStore(
         patchState(store, { error: err.message || 'Errore di rete', loading: false });
       }
     },
+
+    async caricaDettaglioVideogioco(id: number) {
+      patchState(store, { loading: true, error: null }); 
+      try {
+        // Tipizziamo la risposta con il modello singolo (non array)
+        const response = await firstValueFrom(
+          videogiocoService.getDettaglio(id)
+        );
+
+        if (response.success) {
+          // Ora TypeScript riconosce 'detail' e non darà più errore!
+          patchState(store, { detail: response.data, loading: false });
+        } else {
+          patchState(store, { error: 'Errore nel recupero dati del singolo record', loading: false });
+        }
+      } catch (err: any) {
+        patchState(store, { error: err.message || 'Errore di rete', loading: false });
+      }
+    }
   })),
   withHooks({
     onInit(store) {
-      // Carica automaticamente i dati quando lo store viene inizializzato
       store.caricaVideogiochi();
     },
   }),

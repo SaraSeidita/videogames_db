@@ -11,14 +11,13 @@
 
       <div class="grid">
         @for (gioco of store.lista(); track gioco.id) {
-          <div class="card">
+          <div class="card" (click)="onGiocoClick(gioco)">
             <div class="card-image">
               <img [src]="gioco.immagineUrl || 'assets/images/img/default.jpg'" [alt]="gioco.titolo">
             </div>
             <div class="card-content">
               <h3>{{ gioco.titolo }}</h3>
               <span class="badge">{{ gioco.genere }}</span>
-              <p class="trama">{{ gioco.trama || 'Nessuna trama disponibile.' }}</p>
               <div class="card-footer">
                 <span>Uscita: <strong>{{ gioco.annoUscita }}</strong></span>
                 <span>Giocato: <strong>{{ gioco.annoGiocata }}</strong></span>

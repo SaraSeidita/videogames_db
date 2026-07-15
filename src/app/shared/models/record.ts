@@ -8,6 +8,15 @@ export interface VideogiocoListModel {
   genere: string;
   annoUscita: number;
   annoGiocata: number;
-  trama: string;
   immagineUrl: string;
+}
+
+
+// modello per i dettagli di un singolo videogioco, estendendo con VideogiocoListModel
+
+export interface VideogiocoDetailModel extends VideogiocoListModel {
+  
+  trama: string;
+  recensione: string;
+  dataInserimento: Date;
 }

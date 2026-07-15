@@ -1,1 +1,39 @@
-<p>Qua si visualizzerà il dettaglio di un videogioco cliccando una card</p>
+
+<div class="container">
+      <button class="btn-back" (click)="goBack()">⬅️ Torna alla lista</button>
+
+      @if (store.loading()) {
+        <div class="loader">Caricamento dettagli in corso...</div>
+      }
+
+      @if (store.error()) {
+        <div class="error-banner">Errore: {{ store.error() }}</div>
+      }
+
+      @if (store.detail(); as gioco) {
+        <div class="detail-container">
+          <div class="detail-header">
+            <img [src]="gioco.immagineUrl || 'assets/images/img/default.jpg'" [alt]="gioco.titolo" class="detail-img">
+            <div class="detail-info">
+              <h1>{{ gioco.titolo }}</h1>
+              <span class="badge">{{ gioco.genere }}</span>
+              <p><strong>Anno di Uscita:</strong> {{ gioco.annoUscita }}</p>
+              <p><strong>Anno in cui è stato giocato:</strong> {{ gioco.annoGiocata }}</p>
+              @if (gioco.dataInserimento) {
+                <p><strong>Aggiunto il:</strong> {{ gioco.dataInserimento | date:'dd/MM/yyyy' }}</p>
+              }
+            </div>
+          </div>
+
+          <hr class="divider">
+
+          <div class="detail-body">
+            <h3>📖 Trama</h3>
+            <p>{{ gioco.trama || 'Trama non disponibile.' }}</p>
+
+            <h3 class="recensione-title">⭐ Recensione personale</h3>
+            <p class="recensione-text">{{ gioco.recensione || 'Nessuna recensione inserita.' }}</p>
+          </div>
+        </div>
+      }
+    </div>

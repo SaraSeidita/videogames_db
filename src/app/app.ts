@@ -4,7 +4,7 @@ import { RecordList } from './features/records/record-list/record-list';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RecordList],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
