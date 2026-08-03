@@ -1,0 +1,52 @@
+
+<!-- // farò il form del login qua  -->
+
+<header class="navbar">
+  <div class="logo">
+    <a routerLink="/">🎮 Video Game Catalog</a>
+  </div>
+
+  <div class="auth-section">
+    <!-- SE L'UTENTE È LOGGATO -->
+    @if (authService.isAuthenticated()) {
+      <div class="user-logged-in">
+        <span class="welcome-msg">
+          Ciao, <strong>{{ authService.currentUser()?.username }}</strong>!
+        </span>
+        
+        <!-- Bottone Aggiungi Videogioco -->
+        <a routerLink="/record-add" class="btn btn-add">+ Add Game</a>
+        
+        <!-- Bottone Logout -->
+        <button (click)="onLogout()" class="btn btn-logout">Logout</button>
+      </div>
+    } 
+    <!-- SE L'UTENTE NON È LOGGATO -->
+    @else {
+      <form (ngSubmit)="onLogin()" class="login-form">
+        <input 
+          type="text" 
+          placeholder="Username" 
+          [(ngModel)]="credentials.username" 
+          name="username" 
+          required 
+        />
+        <input 
+          type="password" 
+          placeholder="Password" 
+          [(ngModel)]="credentials.pw" 
+          name="pw" 
+          required 
+        />
+        
+        <button type="submit" [disabled]="isLoading()" class="btn btn-login">
+          {{ isLoading() ? 'Logging in...' : 'Login' }}
+        </button>
+
+        @if (errorMessage()) {
+          <span class="error-tooltip">{{ errorMessage() }}</span>
+        }
+      </form>
+    }
+  </div>
+</header>

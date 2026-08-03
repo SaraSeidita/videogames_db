@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { RecordList } from './features/records/record-list/record-list';
 import { RecordDetail } from './features/records/record-detail/record-detail';
 import { RecordAdd } from './features/records/record-add/record-add';
-import { authGuard } from './shared/guards/auth-guard';
+import { authGuard } from './shared/guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'record-list', pathMatch: 'full' }, // route di default che reindirizza alla lista dei videogiochi
