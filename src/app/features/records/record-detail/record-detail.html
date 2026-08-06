@@ -16,7 +16,8 @@
             <img [src]="gioco.immagineUrl || 'assets/images/img/default.jpg'" [alt]="gioco.titolo" class="detail-img">
             <div class="detail-info">
               <h1>{{ gioco.titolo }}</h1>
-              <span class="badge">{{ gioco.genere }}</span>
+              <span class="badge" style="margin-top: 6px; margin-left: 5px; margin-bottom: 6px;">{{ gioco.genere }}</span>
+              <span class="badge" style="margin-top: 6px; margin-left: 5px; margin-bottom: 6px;">{{ gioco.piattaforma }}</span>
               <p><strong>Anno di Uscita:</strong> {{ gioco.annoUscita }}</p>
               <p><strong>Anno in cui è stato giocato:</strong> {{ gioco.annoGiocata }}</p>
               @if (gioco.dataInserimento) {

@@ -6,6 +6,7 @@ export interface VideogiocoListModel {
   id: number;
   titolo: string;
   genere: string;
+  piattaforma: string;
   annoUscita: number;
   annoGiocata: number;
   immagineUrl: string;
